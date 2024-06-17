@@ -6,7 +6,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 import config
-from data_operations.data_preprocessing import import_minimias_dataset
+from data_operations.data_preprocessing import import_dataset
 
 
 

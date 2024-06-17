@@ -47,9 +47,11 @@ def load_trained_model():
     """
     print("Loading trained model")
     return load_model(
-        "/Users/aysen/OneDrive/Masaüstü/Breast_Cancer_Detection/saved_model/dataset-{}_model-{}_saved-model.h5".format(
-            config.dataset,
-            config.model)
+        "/Users/aysen/OneDrive/Masaüstü/Breast_Cancer_Detection/saved_model/dataset-{}_model-{}-lr_{}-batch_size_{}_saved-model.h5".format(
+                config.dataset,
+                config.model,
+                config.learning_rate,
+                config.batch_size,)
      )
 
 
@@ -60,6 +62,5 @@ def save_output_figure(title: str):
             config.dataset,
             config.mammogram_type,
             config.model,
-            config.name,
             title))  
     

@@ -12,12 +12,23 @@ import tensorflow_io as tfio
 
 def calculate_balanced_class_weights(y_train, label_encoder):
    
-    if label_encoder.classes_.size != 2:
+    if config.dataset=="MBCD_Implant":
+        class_counts = np.bincount(y_train)
+    
+        # Calculate class weights based on class frequencies
+        total_samples = len(y_train)
+        class_weights = {cls: total_samples / count for cls, count in enumerate(class_counts)}
+        
+        
+    elif label_encoder.classes_.size != 2:
         y_train = label_encoder.inverse_transform(np.argmax(y_train, axis=1))
 
-    # Balanced class weights
-    weights = compute_class_weight(class_weight="balanced", classes=np.unique(y_train), y=y_train)
-    class_weights = dict(enumerate(weights))
+        
+    else:
+        # Balanced class weights
+        weights = compute_class_weight(class_weight="balanced", classes=np.unique(y_train), y=y_train)
+        class_weights = dict(enumerate(weights))
+        
 
     if config.verbose_mode:
         print("Class weights: {}".format(str(class_weights)))
@@ -26,13 +37,7 @@ def calculate_balanced_class_weights(y_train, label_encoder):
 
 
 
-def import_minimias_dataset(data_dir, label_encoder):
-    
-    """
-    [1. 0. 0.] - This corresponds to Benign.
-    [0. 1. 0.] - This corresponds to Malignant.
-    [0. 0. 1.] - This corresponds to Normal.
-    """
+def import_dataset(data_dir, label_encoder):
     
     # Initialize variables
     images = []
@@ -54,7 +59,6 @@ def import_minimias_dataset(data_dir, label_encoder):
         #print(f"{class_label}: {index}")
 
     return images, labels
-
 
 
 
