@@ -45,14 +45,17 @@ def load_trained_model():
     """
     Load the model previously trained for the final evaluation using the test set.
     """
-    print("Loading trained model")
-    return load_model(
-        "/Users/aysen/OneDrive/Masaüstü/Breast_Cancer_Detection/saved_model/dataset-{}_model-{}-lr_{}-batch_size_{}_saved-model.h5".format(
-                config.dataset,
-                config.model,
-                config.learning_rate,
-                config.batch_size,)
-     )
+    if config.model == "vit" or config.model == "ResNet":
+        return load_model("/Users/aysen/OneDrive/Masaüstü/Mammography_Images_Analysis/saved_model/vision_transformer_model")
+    else:
+        print("Loading trained model")
+        return load_model(
+            "/Users/aysen/OneDrive/Masaüstü/Breast_Cancer_Detection/saved_model/dataset-{}_model-{}-lr_{}-batch_size_{}_saved-model.h5".format(
+                    config.dataset,
+                    config.model,
+                    config.learning_rate,
+                    config.batch_size,)
+        )
 
 
 def save_output_figure(title: str):

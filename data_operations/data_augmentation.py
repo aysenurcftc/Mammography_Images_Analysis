@@ -49,8 +49,13 @@ def generate_image_transforms(images, labels):
             elif config.model == "MobileNet":
                 transformed_image = transformed_image.reshape(1, config.MOBILE_NET_IMG_SIZE['HEIGHT'],
                                                               config.MOBILE_NET_IMG_SIZE["WIDTH"], 1)
+                
+            elif config.model == "vit":
+                transformed_image = transformed_image.reshape(1, config.MOBILE_NET_IMG_SIZE['HEIGHT'],
+                                                              config.MOBILE_NET_IMG_SIZE["WIDTH"], 1)
          
             images_with_transforms = np.append(images_with_transforms, transformed_image, axis=0)
+            
             transformed_label = label.reshape(1, len(label))
             labels_with_transforms = np.append(labels_with_transforms, transformed_label, axis=0)
 
@@ -87,7 +92,6 @@ def filters_medianblur(image):
 def horizontal_flip(image):
    
     return image[:, ::-1]
-
 
 
 

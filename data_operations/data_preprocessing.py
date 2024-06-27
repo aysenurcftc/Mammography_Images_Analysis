@@ -24,14 +24,11 @@ def calculate_balanced_class_weights(y_train, label_encoder):
         y_train = label_encoder.inverse_transform(np.argmax(y_train, axis=1))
 
         
-    else:
-        # Balanced class weights
-        weights = compute_class_weight(class_weight="balanced", classes=np.unique(y_train), y=y_train)
-        class_weights = dict(enumerate(weights))
+  
+    # Balanced class weights
+    weights = compute_class_weight(class_weight="balanced", classes=np.unique(y_train), y=y_train)
+    class_weights = dict(enumerate(weights))
         
-
-    if config.verbose_mode:
-        print("Class weights: {}".format(str(class_weights)))
 
     return class_weights
 
@@ -64,13 +61,9 @@ def import_dataset(data_dir, label_encoder):
 
 
 def import_cbisddsm_training_dataset(label_encoder):
-    """
-    Import the dataset getting the image paths (downloaded on BigTMP) and encoding the labels.
-    Originally written as a group for the common pipeline. Later amended by Adam Jaamour.
-    :param label_encoder: The label encoder.
-    :return: Two arrays, one for the image paths and one for the encoded labels.
-    """
+   
     print("Importing CBIS-DDSM training set")
+    
     cbis_ddsm_path = str()
     if config.mammogram_type == "calc":
         cbis_ddsm_path = "./data/CBIS-DDSM/output/calc-test.csv"
@@ -142,13 +135,7 @@ def dataset_split(split, dataset, labels):
 
 
 def create_dataset(x, y):
-    """
-    Generates a TF dataset for feeding in the data.
-    Originally written as a group for the common pipeline.
-    :param x: X inputs - paths to images
-    :param y: y values - labels for images
-    :return: the dataset
-    """
+   
     dataset = tf.data.Dataset.from_tensor_slices((x, y))
 
     # Map values from dicom image path to array
