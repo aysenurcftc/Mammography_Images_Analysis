@@ -46,7 +46,7 @@ def load_trained_model():
     Load the model previously trained for the final evaluation using the test set.
     """
     if config.model == "vit" or config.model == "ResNet":
-        return load_model("/Users/aysen/OneDrive/Masaüstü/Mammography_Images_Analysis/saved_model/vision_transformer_model")
+        return load_model("/Users/aysen/OneDrive/Masaüstü/Mammography_Images_Analysis/saved_model/vision_transformer_model1")
     else:
         print("Loading trained model")
         return load_model(

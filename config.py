@@ -2,20 +2,18 @@
 # Constants
 RANDOM_SEED = 42
 
-#lr -> 0.1, 0.01, 0.001, 0.0001, 0.00001
+#lr -> 0.00001, 0.000001, 
 
-# models: -> CNN, MobileNet, Resnet50
+# models: -> CNN, vit
 #datasets -> mini-MIAS, CBIS-DDSM, MBCD_Implant, CLAHE_images
 
-dataset = "CLAHE_images"       
+dataset = "CBIS-DDSM"       
 mammogram_type ="calc"     
 model = "vit"              
 run_mode ="training"       
-learning_rate = 0.00001    
-batch_size = 32
-max_epochs = 200
-max_epoch_frozen = 200    
-max_epoch_unfrozen = 100
+learning_rate = 0.000001    
+batch_size = 8
+max_epoch = 100
 verbose_mode = True                   
 visualize = False
 
@@ -42,13 +40,7 @@ MOBILE_NET_IMG_SIZE = {
     "WIDTH": 224
 }
 
-VGG_IMG_SIZE = {
-    "HEIGHT": 512,
-    "WIDTH": 512
-}
 
-
-DENSE_NET_IMG_SIZE = MOBILE_NET_IMG_SIZE
 RESNET_IMG_SIZE = MOBILE_NET_IMG_SIZE
 
 #******************** VİT ***************************#

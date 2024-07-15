@@ -16,10 +16,8 @@ from keras import layers
 from keras.preprocessing.image import ImageDataGenerator
 from models.basic_cnn import create_basic_cnn_model
 os.environ['TF_GPU_ALLOCATOR'] = 'cuda_malloc_async'
-from models.mobilenet_v2 import create_mobilenet_model
-from models.resnet50 import create_resnet50_model
 from models.vit import MultiHeadAttentionLSA, PatchEncoder, ShiftedPatchTokenization
-from visualisation.plots import plot_training_history
+
 
 class CnnModel:
 
@@ -33,12 +31,8 @@ class CnnModel:
 
         if self.model_name == "CNN":
             self._model = create_basic_cnn_model(self.num_classes)
-        elif self.model_name == "MobileNet":
-            self._model = create_mobilenet_model(self.num_classes) 
         elif self.model_name == "vit":
             self._model = self.create_vit_classifier()
-        elif self.model_name == "ResNet":
-            self._model = create_resnet50_model(self.num_classes)
         else:
             raise ValueError(f"Unknown model name: {self.model_name}")
 
@@ -49,20 +43,9 @@ class CnnModel:
         
           if not self.model_name == "CNN":
 
-            if self.model_name == "ResNet" or self.model_name == "MobileNet":
-                self._model.layers[0].trainable = False
               
             self.compile_model(config.learning_rate)
             self.fit_model(X_train, X_val, y_train, y_val, class_weights, is_frozen_layers=True)
-
-         
-            if self.model_name == "ResNet" or self.model_name == "MobileNet":
-                self._model.layers[0].trainable = True
-           
-
-            
-            self.compile_model(1e-5)  # Very low learning rate.
-            self.fit_model(X_train, X_val, y_train, y_val, class_weights, is_frozen_layers=False)
 
 
           else:
@@ -186,11 +169,11 @@ class CnnModel:
         try:
             
             if is_frozen_layers:
-                max_epochs = config.max_epoch_frozen
-                patience = 10
+                max_epochs = config.max_epoch
+                patience = 20
             else:
-                max_epochs = config.max_epoch_unfrozen
-                patience = 10
+                max_epochs = config.max_epoch
+                patience = 20
                 
             if config.dataset == "mini-MIAS":
                 self.history = self._model.fit(
@@ -294,7 +277,7 @@ class CnnModel:
     def save_model(self):
         print("Saving model")
         if config.model == "MobileNet" or config.model == "vit" or config.model == "ResNet":
-            self._model.save('/Users/aysen/OneDrive/Masaüstü/Mammography_Images_Analysis/saved_model/vision_transformer_model',save_format='tf')
+            self._model.save('/Users/aysen/OneDrive/Masaüstü/Mammography_Images_Analysis/saved_model/vision_transformer_model1',save_format='tf')
         else:
             self._model.save("/Users/aysen/OneDrive/Masaüstü/Breast_Cancer_Detection/saved_model/dataset-{}_model-{}-lr_{}-batch_size_{}_saved-model.h5".format(
                 config.dataset,
